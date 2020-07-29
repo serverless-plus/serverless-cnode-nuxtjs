@@ -1,0 +1,93 @@
+{
+  "name": "serverless-cnode-nuxtjs",
+  "version": "0.1.0",
+  "description": "Serverles Cnode Client",
+  "author": "yugasun",
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "lint": "eslint --ext .js,.vue .",
+    "server": "nodemon server/app.js",
+    "fly": "npm-run-all --parallel dev server"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "linters": {
+      "client/{pages,components,layouts,middleware,plugins,store}/**/*.{vue,js}": [
+        "npm run lint",
+        "eslint --fix",
+        "git add"
+      ]
+    },
+    "ignore": [
+      "client/{assets,static}"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.12.0",
+    "@nuxtjs/component-cache": "^1.1.6",
+    "@nuxtjs/pwa": "^3.0.0-beta.20",
+    "@nuxtjs/toast": "^3.3.1",
+    "apicache": "^1.5.3",
+    "axios": "^0.19.2",
+    "body-parser": "^1.19.0",
+    "cookie": "^0.4.1",
+    "cors": "^2.8.5",
+    "editor.md": "^1.5.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "jquery": "^3.5.1",
+    "js-cookie": "^2.2.1",
+    "normalize-scss": "^7.0.1",
+    "nuxt": "^2.14.0",
+    "query-string": "^6.13.1",
+    "reset-css": "^5.0.1",
+    "store2": "^2.11.2",
+    "vuex-persistedstate": "^3.0.1"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^9.1.1",
+    "@commitlint/config-conventional": "^9.1.1",
+    "@nuxtjs/style-resources": "^1.0.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.5.0",
+    "eslint-friendly-formatter": "^4.0.1",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-vue": "^6.2.2",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.11",
+    "node-sass": "^4.14.1",
+    "nodemon": "^2.0.4",
+    "npm-run-all": "^4.1.5",
+    "nuxt-sass-resources-loader": "^2.0.5",
+    "sass-bem": "^2.6.5",
+    "sass-loader": "^9.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/serverless-plus/serverless-cnode-nuxtjs.git"
+  },
+  "keywords": [
+    "serverless",
+    "cnode",
+    "nuxt.js",
+    "ssr"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/serverless-plus/serverless-cnode-nuxtjs/issues"
+  },
+  "homepage": "https://github.com/serverless-plus/serverless-cnode-nuxtjs#readme"
+}
