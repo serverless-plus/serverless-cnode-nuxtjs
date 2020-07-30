@@ -54,7 +54,6 @@
     "nuxt": "^2.14.0",
     "query-string": "^6.13.1",
     "reset-css": "^5.0.1",
-    "store2": "^2.11.2",
     "vuex-persistedstate": "^3.0.1"
   },
   "devDependencies": {

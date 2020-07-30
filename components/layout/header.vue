@@ -19,12 +19,6 @@
             <nuxt-link to="/my/messages">未读消息</nuxt-link>
           </span>
           <span>
-            <nuxt-link to="/getstart">新手入门</nuxt-link>
-          </span>
-          <span>
-            <nuxt-link to="/apiv1">API</nuxt-link>
-          </span>
-          <span>
             <nuxt-link to="/about">关于</nuxt-link>
           </span>
           <span class="navbar__nossr">
@@ -33,22 +27,9 @@
               <span class="navbar__logout" @click="$store.dispatch('LOGOUT')">退出</span>
             </template>
             <template v-else>
-              <nuxt-link to="/signin">注册</nuxt-link>
               <nuxt-link to="/signin">登录</nuxt-link>
             </template>
           </span>
-          <!-- <lazy-wrapper :loading="loading" height="40px">
-            <span class="navbar__nossr">
-              <template v-if="user">
-                <nuxt-link to="/setting">设置</nuxt-link>
-                <span class="navbar__logout" @click="$store.dispatch('LOGOUT')">退出</span>
-              </template>
-              <template v-else>
-                <nuxt-link to="/signin">注册</nuxt-link>
-                <nuxt-link to="/signin">登录</nuxt-link>
-              </template>
-            </span>
-          </lazy-wrapper>-->
         </div>
       </div>
     </div>

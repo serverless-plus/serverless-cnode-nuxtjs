@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import { CancelToken } from 'axios';
 import { validTabs } from '~/common/constants';
 import { lazy } from '~/common/utils';
 
@@ -39,19 +40,11 @@ export default {
   // Actions
   // =================================================
   actions: {
-    nuxtServerInit({ commit }, { req }) {
-      if (req.session.user) {
-        const user = req.session.user;
-        commit('SET_STATE', { user });
-      }
-    },
-
     FETCH_ITEM({ commit, state, dispatch }, { id, mdrender = true }) {
       return lazy(
         item => commit('SET_ITEM', { item }),
         async () => {
-          console.log('id', id);
-          let item = await this.$axios.$get('/api/topic/' + id, {
+          let item = await this.$axios.$get('/topic/' + id, {
             params: {
               mdrender,
               needAccessToken: state.user && mdrender ? true : ''
@@ -92,7 +85,7 @@ export default {
           commit('SET_ITEMS', { items });
         },
         () =>
-          this.$axios.$get('/api/topics', {
+          this.$axios.$get('/topics', {
             params: {
               page,
               tab,
@@ -109,8 +102,9 @@ export default {
       let user;
       try {
         // commit('SET_STATE', { loading: true })
-        let res = await this.$axios.$post('/api/user/login', { accesstoken });
-        user = res.data;
+        let res = await this.$axios.$post('/accesstoken', { accesstoken });
+        user = res;
+        user.accesstoken = accesstoken;
       } catch (err) {
         user = null;
       } finally {
@@ -131,7 +125,6 @@ export default {
 
     async LOGOUT({ commit }) {
       try {
-        await this.$axios.$get('/api/user/logout');
         commit('SET_STATE', { user: null });
         this.$toast.success('退出登录成功');
         setTimeout(_ => {
@@ -143,7 +136,7 @@ export default {
     FETCH_USER({ commit, state }, { name }) {
       return lazy(
         user => commit('SET_USER', { name, user }),
-        () => this.$axios.$get('/api/user/' + name),
+        () => this.$axios.$get('/user/' + name),
         Object.assign(
           { name, loading: true, replies: [], topices: [] },
           state.users[name]
@@ -154,10 +147,11 @@ export default {
     async CREATE_TOPIC({ commit, state }, { tab, title, content }) {
       try {
         commit('SET_STATE', { loading: true });
-        await this.$axios.$post('/api/topics?needAccessToken=true', {
+        await this.$axios.$post('/topics', {
           tab: 'dev', // 防止误操作😆
           title,
-          content
+          content,
+          accesstoken: state.user.accesstoken
         });
         this.$toast.success('创建话题成功');
         setTimeout(_ => {
@@ -172,11 +166,12 @@ export default {
     async UPDATE_TOPIC({ commit, state }, { id, tab, title, content }) {
       try {
         commit('SET_STATE', { loading: true });
-        await this.$axios.$post('/api/topics/update?needAccessToken=true', {
+        await this.$axios.$post('/topics/update', {
           topic_id: id,
           tab: 'dev', // 防止误操作😆
           title,
-          content
+          content,
+          accesstoken: state.user.accesstoken
         });
         this.$toast.success('更新话题成功');
         setTimeout(_ => {
@@ -192,11 +187,12 @@ export default {
       try {
         commit('SET_STATE', { loading: true });
         await this.$axios.$post(
-          `/api/topic_collect/${
+          `/topic_collect/${
             cancel ? 'de_collect' : 'collect'
-          }?needAccessToken=true`,
+          }`,
           {
-            topic_id: id
+            topic_id: id,
+            accesstoken: state.user.accesstoken
           }
         );
         this.$toast.success(`${cancel ? '取消' : ''}收藏成功`);
@@ -212,7 +208,7 @@ export default {
     FETCH_COLLECT({ commit, state }, { name }) {
       return lazy(
         collections => commit('SET_COLLECT', { name, collections }),
-        () => this.$axios.$get(`/api/topic_collect/${name}`),
+        () => this.$axios.$get(`/topic_collect/${name}`),
         { loading: true }
       );
     },
@@ -220,19 +216,21 @@ export default {
     FETCH_MESSAGE({ commit, state }) {
       return lazy(
         data => commit('SET_MESSAGE', { data }),
-        () => this.$axios.$get('/api/messages?needAccessToken=true'),
+        () => this.$axios.$get('/messages', { params: {
+          accesstoken: state.user.accesstoken
+        }}),
         { loading: true }
       );
     },
 
     async REPLY_TOPIC({ commit, state, dispatch }, { id, content, reply_id }) {
-      let data = { content };
+      let data = { content, accesstoken: state.user.accesstoken };
       if (reply_id) {
         data.reply_id = reply_id;
       }
       try {
         let res = await this.$axios.$post(
-          `/api/topic/${id}/replies?needAccessToken=true`,
+          `/topic/${id}/replies`,
           data
         );
         if (res.success) {
@@ -245,7 +243,9 @@ export default {
     async STAR_TOPIC({ commit, state }, { id, reply_id }) {
       try {
         let res = await this.$axios.$post(
-          `/api/reply/${reply_id}/ups?needAccessToken=true`
+          `/reply/${reply_id}/ups`, {
+            accesstoken: state.user.accesstoken
+          }
         );
         if (res.success) {
           this.$toast.success(`${res.action === 'up' ? '' : '取消'}点赞成功`);

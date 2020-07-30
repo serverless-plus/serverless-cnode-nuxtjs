@@ -39,7 +39,6 @@
       </template>
       <noreply-topic></noreply-topic>
       <leaderboard></leaderboard>
-      <client-qrcode></client-qrcode>
     </div>
   </div>
 </template>
@@ -51,7 +50,6 @@ import Personal from '~/components/sidebar/personal';
 import Anonymous from '~/components/sidebar/anonymous';
 import NoreplyTopic from '~/components/sidebar/noreply-topic';
 import Leaderboard from '~/components/sidebar/leaderboard';
-import ClientQrcode from '~/components/sidebar/client-qrcode';
 import CreateTopic from '~/components/sidebar/create-topic';
 import { tabs, validTabs } from '~/common/constants';
 
@@ -65,7 +63,6 @@ export default {
     Anonymous,
     NoreplyTopic,
     Leaderboard,
-    ClientQrcode,
     CreateTopic
   },
 
