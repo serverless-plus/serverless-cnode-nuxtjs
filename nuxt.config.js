@@ -43,7 +43,7 @@ module.exports = {
   axios: {
     baseURL: 'https://cnodejs.org/api/v1',
   },
-  buildModules: ["@nuxtjs/style-resources"],
+  buildModules: ["@nuxtjs/style-resources", '@nuxtjs/pwa',],
   styleResources: {
     scss: [
       "sass-bem/_bem.scss",
@@ -51,6 +51,13 @@ module.exports = {
       "~/assets/theme/common/utils.scss",
       "~/assets/theme/common/mixins.scss",
     ],
+  },
+
+  pwa: {
+    manifest: {
+      name: "Serverless CNode",
+      lang: "zh-CN"
+    }
   },
   plugins: [
     "~/plugins/axios",
