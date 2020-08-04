@@ -10,7 +10,7 @@ module.exports = {
       {
         hid: "description",
         name: "description",
-        content: "基于 Nuxt (服务器端渲染 SSR) 构建 CNode 社区",
+        content: "基于 Serverless 部署和Nuxt (服务器端渲染 SSR) 构建 CNode 社区",
       },
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
@@ -43,7 +43,10 @@ module.exports = {
   axios: {
     baseURL: 'https://cnodejs.org/api/v1',
   },
-  buildModules: ["@nuxtjs/style-resources", '@nuxtjs/pwa',],
+  buildModules: [
+    "@nuxtjs/style-resources",
+    '@nuxtjs/pwa',
+  ],
   styleResources: {
     scss: [
       "sass-bem/_bem.scss",
@@ -54,6 +57,8 @@ module.exports = {
   },
 
   pwa: {
+    // TODO: can not work with custom express server with icon?
+    icon: false,
     manifest: {
       name: "Serverless CNode",
       lang: "zh-CN"

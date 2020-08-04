@@ -1,0 +1,53 @@
+org: serverless-cnode
+app: serverless-cnode
+stage: dev
+component: nuxtjs
+name: serverless-cnode-nuxtjs
+
+inputs:
+  src:
+    dist: ./
+    hook: npm run build:sls
+    exclude:
+      - .env
+      - ".git/**"
+      - "docs/**"
+      - ".next/cache/**"
+      - "node_modules/**"
+  region: ${env:REGION}
+  runtime: Nodejs12.16
+  functionName: serverless-cnode-nuxtjs
+  layers:
+    - name: ${output:${stage}:${app}:${name}-layer.name}
+      version: ${output:${stage}:${app}:${name}-layer.version}
+  functionConf:
+    timeout: 10
+    environment:
+      variables:
+        NODE_ENV: production
+        SERVERLESS: true
+  apigatewayConf:
+    protocols:
+      - http
+      - https
+    environment: release
+    enableCORS: true
+    customDomains:
+      - domain: ${env:APIGW_CUSTOM_DOMAIN}
+        certificateId: ${env:APIGW_CUSTOM_DOMAIN_CERTID}
+        isDefaultMapping: false
+        pathMappingSet:
+          - path: /
+            environment: release
+        protocols:
+          - http
+          - https
+  staticConf:
+    cosConf:
+      bucket: ${env:BUCKET}
+    cdnConf:
+      # after you deploy CDN once, just set onlyRefresh to true for refresh CDN cache
+      onlyRefresh: false
+      domain: ${env:CDN_DOMAIN}
+      https:
+        certId: ${env:CDN_DOMAIN_CERTID}
