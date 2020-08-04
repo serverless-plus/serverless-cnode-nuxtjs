@@ -30,8 +30,6 @@ import BreadcrumbItem from '~/components/breadcrumb/item';
 export default {
   name: 'setting',
 
-  middleware: 'auth',
-
   layout: 'sidebar',
 
   components: {

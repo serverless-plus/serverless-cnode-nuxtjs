@@ -7,7 +7,7 @@
         <anonymous v-if="!user"></anonymous>
         <template v-else>
           <personal :user="user"></personal>
-          <create-topic></create-topic>
+          <!-- <create-topic></create-topic> -->
         </template>
       </div>
     </div>
@@ -20,7 +20,7 @@ import Header from '~/components/layout/header';
 import Footer from '~/components/layout/footer';
 import Anonymous from '~/components/sidebar/anonymous';
 import Personal from '~/components/sidebar/personal';
-import CreateTopic from '~/components/sidebar/create-topic';
+// import CreateTopic from '~/components/sidebar/create-topic';
 
 export default {
   name: 'sidebarLayout',
@@ -29,8 +29,8 @@ export default {
     Header,
     Footer,
     Anonymous,
-    Personal,
-    CreateTopic
+    Personal
+    // CreateTopic
   },
 
   computed: {

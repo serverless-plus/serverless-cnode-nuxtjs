@@ -9,11 +9,13 @@
           </breadcrumb>
         </div>
         <div class="topic-create__content">
-          <div class="topic-create__alert" v-show="visible"><alert type="error" v-model="visible" :text="errorText"></alert></div>
+          <div class="topic-create__alert" v-show="visible">
+            <alert type="error" v-model="visible" :text="errorText"></alert>
+          </div>
           <div class="topic-create__plate">
             <span>选择板块：</span>
             <select name="plate" id="plate" v-model="tab">
-              <option disabled value="">请选择</option>
+              <option disabled value>请选择</option>
               <option value="share">分享</option>
               <option value="ask">问答</option>
               <option value="job">招聘</option>
@@ -21,7 +23,7 @@
             </select>
           </div>
           <div class="topic-create__title">
-            <input type="text" v-model="title" placeholder="标题字数 10 字以上">
+            <input type="text" v-model="title" placeholder="标题字数 10 字以上" />
           </div>
           <no-ssr>
             <div class="topic-create__text">
@@ -32,7 +34,9 @@
           </no-ssr>
           <div class="topic-create__submit">
             <button class="button--blue" @click="createTopic">提交</button>
-            <span class="topic-create__lazy-wrapper"><lazy-wrapper :loading="loading"></lazy-wrapper></span>
+            <span class="topic-create__lazy-wrapper">
+              <lazy-wrapper :loading="loading"></lazy-wrapper>
+            </span>
           </div>
         </div>
       </div>
@@ -50,8 +54,6 @@ import Alert from '~/components/alert';
 export default {
   name: 'TopicCreate',
 
-  middleware: 'auth',
-
   components: {
     LazyWrapper,
     Breadcrumb,
@@ -59,10 +61,13 @@ export default {
     Alert
   },
 
-  head () {
+  head() {
     return {
       link: [
-        { rel: 'stylesheet', href: '//cdn.jsdelivr.net/editor/0.1.0/editor.css' }
+        {
+          rel: 'stylesheet',
+          href: '//cdn.jsdelivr.net/editor/0.1.0/editor.css'
+        }
       ],
       script: [
         { src: '//cdn.jsdelivr.net/editor/0.1.0/editor.js' },
@@ -71,11 +76,11 @@ export default {
     };
   },
 
-  fetch ({ store, params: { id } }) {
+  fetch({ store, params: { id } }) {
     return store.dispatch('FETCH_ITEM', { id, mdrender: false });
   },
 
-  data () {
+  data() {
     return {
       tab: '',
       title: '',
@@ -86,25 +91,25 @@ export default {
   },
 
   computed: {
-    loading () {
+    loading() {
       return this.$store.state.loading;
     },
-    id () {
+    id() {
       return this.$route.params.id;
     },
-    item () {
+    item() {
       return this.$store.state.items[this.id];
     }
   },
 
   methods: {
-    setErrorText (errorText) {
+    setErrorText(errorText) {
       this.visible = true;
       this.errorText = errorText;
       return;
     },
 
-    validateTopicField () {
+    validateTopicField() {
       const { tab, title, editor, setErrorText } = this;
       if (!tab) {
         return setErrorText('请选择要发布到的板块。');
@@ -116,16 +121,21 @@ export default {
       return true;
     },
 
-    createTopic () {
+    createTopic() {
       const { id, tab, title, editor } = this;
       if (!this.validateTopicField()) {
         return;
       }
-      this.$store.dispatch('UPDATE_TOPIC', { id, tab, title, content: editor.codemirror.getValue() });
+      this.$store.dispatch('UPDATE_TOPIC', {
+        id,
+        tab,
+        title,
+        content: editor.codemirror.getValue()
+      });
     }
   },
 
-  mounted () {
+  mounted() {
     this.$nextTick(_ => {
       this.editor = new Editor();
       this.editor.render();
@@ -142,7 +152,8 @@ export default {
 
 <style lang="scss">
 @include b(topic-create) {
-  .CodeMirror, .editormd-preview {
+  .CodeMirror,
+  .editormd-preview {
     height: 450px;
   }
 
@@ -177,7 +188,7 @@ export default {
       color: #555;
       border: none;
       border-radius: 4px;
-      box-shadow: 0 0 2px rgba(60,60,60,.5);
+      box-shadow: 0 0 2px rgba(60, 60, 60, 0.5);
       outline: none;
     }
   }
@@ -190,6 +201,5 @@ export default {
     height: 34px;
     margin-top: -5px;
   }
-
 }
 </style>

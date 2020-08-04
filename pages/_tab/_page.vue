@@ -35,7 +35,7 @@
       <anonymous v-if="!user"></anonymous>
       <template v-else>
         <personal :user="user"></personal>
-        <create-topic></create-topic>
+        <!-- <create-topic></create-topic> -->
       </template>
       <noreply-topic></noreply-topic>
       <leaderboard></leaderboard>
@@ -50,7 +50,7 @@ import Personal from '~/components/sidebar/personal';
 import Anonymous from '~/components/sidebar/anonymous';
 import NoreplyTopic from '~/components/sidebar/noreply-topic';
 import Leaderboard from '~/components/sidebar/leaderboard';
-import CreateTopic from '~/components/sidebar/create-topic';
+// import CreateTopic from '~/components/sidebar/create-topic';
 import { tabs, validTabs } from '~/common/constants';
 
 export default {
@@ -62,8 +62,8 @@ export default {
     Personal,
     Anonymous,
     NoreplyTopic,
-    Leaderboard,
-    CreateTopic
+    Leaderboard
+    // CreateTopic
   },
 
   validate({ params: { tab } }) {

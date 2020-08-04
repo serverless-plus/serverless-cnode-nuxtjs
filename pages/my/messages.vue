@@ -38,8 +38,6 @@ import MessageItem from '~/components/message-item';
 export default {
   name: 'Message',
 
-  middleware: 'auth',
-
   layout: 'sidebar',
 
   components: {

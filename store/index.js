@@ -147,8 +147,8 @@ export default {
     async CREATE_TOPIC({ commit, state }, { tab, title, content }) {
       try {
         commit('SET_STATE', { loading: true });
-        await this.$axios.$post('/topics', {
-          tab: 'dev', // 防止误操作😆
+        await this.$axios.$post('/topic/create', {
+          tab: 'dev',
           title,
           content,
           accesstoken: state.user.accesstoken
