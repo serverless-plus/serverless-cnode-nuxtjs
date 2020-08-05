@@ -2,8 +2,8 @@ require('dotenv').config();
 
 const isProd = process.env.NODE_ENV === 'production';
 const STATIC_URL = isProd
-  ? process.env.CDN_DOMAIN
-  : `http://localhost:${parseInt(process.env.PORT, 10) || 8000}`
+  ? `https://${process.env.CDN_DOMAIN}/`
+  : `http://localhost:${parseInt(process.env.PORT, 10) || 8000}/`
 
 module.exports = {
   head: {
@@ -40,7 +40,7 @@ module.exports = {
       // ********* Notice ***********
       // ********* If prod and set CDN_DOMAIN, setup publicPath to it
       if (!isDev && process.env.CDN_DOMAIN) {
-        config.output.publicPath = process.env.CDN_DOMAIN
+        config.output.publicPath = `https://${process.env.CDN_DOMAIN}/`
       }
     },
   },
