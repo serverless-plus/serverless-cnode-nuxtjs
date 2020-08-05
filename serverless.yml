@@ -14,6 +14,9 @@ inputs:
       - "docs/**"
       - ".next/cache/**"
       - "node_modules/**"
+    # must config this, because exclude will ignore all node_modules prefix path
+    include:
+      - .nuxt/dist/client/node_modules
   region: ${env:REGION}
   runtime: Nodejs12.16
   functionName: serverless-cnode-nuxtjs

@@ -2,8 +2,8 @@ require('dotenv').config();
 
 const isProd = process.env.NODE_ENV === 'production';
 const STATIC_URL = isProd
-  ? `https://${process.env.CDN_DOMAIN}/`
-  : `http://localhost:${parseInt(process.env.PORT, 10) || 8000}/`
+  ? `https://${process.env.CDN_DOMAIN}`
+  : `http://localhost:${parseInt(process.env.PORT, 10) || 8000}`
 
 module.exports = {
   head: {
