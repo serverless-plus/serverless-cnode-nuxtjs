@@ -2,7 +2,7 @@
   <div class="cnode">
     <Header />
     <div class="content">
-      <nuxt nuxt-child-key="none" role="main"/>
+      <nuxt nuxt-child-key="none" role="main" />
     </div>
     <Footer />
   </div>
@@ -23,5 +23,4 @@ export default {
 </script>
 
 <style lang="scss">
-
 </style>

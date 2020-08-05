@@ -24,7 +24,6 @@ function handleError (error, app, store, redirect, route) {
 export default function ({ $axios, app, store, redirect, route }) {
   $axios.onRequest(
     config => {
-      console.log('Making request to ' + config.url);
       return config;
     },
     error => {

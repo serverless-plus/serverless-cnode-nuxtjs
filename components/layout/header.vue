@@ -6,29 +6,27 @@
           <nuxt-link class="navbar__brand" to="/">
             <img src="//static2.cnodejs.org/public/images/cnodejs_light.svg" alt="Cnode 中文社区" />
           </nuxt-link>
-          <form class="navbar__search" action="/search">
-            <!-- <i class="cn-icon-search"></i> -->
+          <!-- <form class="navbar__search" action="/search">
+            <i class="cn-icon-search"></i>
             <input type="text" id="q" name="q" />
-          </form>
+          </form>-->
         </div>
         <div class="navbar__nav">
           <span>
             <nuxt-link to="/">首页</nuxt-link>
           </span>
-          <span v-if="user">
+          <span v-show="user">
             <nuxt-link to="/my/messages">未读消息</nuxt-link>
           </span>
           <span>
             <nuxt-link to="/about">关于</nuxt-link>
           </span>
-          <span class="navbar__nossr">
-            <template v-if="user">
-              <nuxt-link to="/setting">设置</nuxt-link>
-              <span class="navbar__logout" @click="$store.dispatch('LOGOUT')">退出</span>
-            </template>
-            <template v-else>
-              <nuxt-link to="/signin">登录</nuxt-link>
-            </template>
+          <span class="navbar__nossr" v-show="user">
+            <nuxt-link to="/setting">设置</nuxt-link>
+            <span class="navbar__logout" @click="$store.dispatch('LOGOUT')">退出</span>
+          </span>
+          <span class="navbar__nossr" v-show="!user">
+            <nuxt-link to="/signin">登录</nuxt-link>
           </span>
         </div>
       </div>
