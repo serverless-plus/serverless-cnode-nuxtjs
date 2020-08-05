@@ -6,11 +6,12 @@ const Cache = require('./cache');
 const isDev = process.env.NODE_ENV !== 'production';
 const port = parseInt(process.env.PORT, 10) || 8000;
 
-function getCacheKey(req) {
-  return `${req.url}`;
-}
 
 async function cacheRender(app, req, res) {
+  function getCacheKey(req) {
+    return `${req.url}`;
+  }
+
   const key = getCacheKey(req);
 
   if (Cache.has(key)) {
@@ -23,10 +24,11 @@ async function cacheRender(app, req, res) {
   if (error) {
     res.send(html);
     return;
+  } else {
+    Cache.set(key, html);
+    res.setHeader('X-Cache', 'MISS');
+    res.send(html);
   }
-  Cache.set(key, html);
-  res.setHeader('X-Cache', 'MISS');
-  res.send(html);
 }
 
 // not report route for custom monitor
@@ -43,9 +45,6 @@ async function startServer() {
   }
 
   // only cache index
-  server.get('/', (req, res) => {
-    return cacheRender(app, req, res);
-  });
   server.get('/all', (req, res) => {
     return cacheRender(app, req, res);
   });
@@ -76,6 +75,7 @@ if (process.env.SERVERLESS) {
     startServer().then((server) => {
       server.listen(port, () => {
         console.log(`> Ready on http://localhost:${port}`);
+        console.log('/n');
       });
     });
   } catch (e) {

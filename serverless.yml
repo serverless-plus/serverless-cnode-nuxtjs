@@ -1,5 +1,5 @@
-org: serverless-cnode
-app: serverless-cnode
+org: serverless-cnode-nuxtjs
+app: serverless-cnode-nuxtjs
 stage: dev
 component: nuxtjs
 name: serverless-cnode-nuxtjs
@@ -47,7 +47,7 @@ inputs:
       bucket: ${env:BUCKET}
     cdnConf:
       # after you deploy CDN once, just set onlyRefresh to true for refresh CDN cache
-      onlyRefresh: false
+      onlyRefresh: true
       domain: ${env:CDN_DOMAIN}
       https:
         certId: ${env:CDN_DOMAIN_CERTID}

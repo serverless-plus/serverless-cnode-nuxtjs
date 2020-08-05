@@ -1,7 +1,11 @@
+require('dotenv').config();
+
+const isProd = process.env.NODE_ENV === 'production';
+const STATIC_URL = isProd
+  ? process.env.CDN_DOMAIN
+  : `http://localhost:${parseInt(process.env.PORT, 10) || 8000}`
+
 module.exports = {
-  /*
-   ** Headers of the page
-   */
   head: {
     title: "Serverless CNode：Node.js专业中文社区",
     meta: [
@@ -13,16 +17,16 @@ module.exports = {
         content: "基于 Serverless 部署和Nuxt (服务器端渲染 SSR) 构建 CNode 社区",
       },
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+    link: [{ rel: "icon", type: "image/x-icon", href: `${STATIC_URL}/favicon.ico` }],
   },
   css: [
     "~/assets/prettify/prettify.css",
     { src: "~/assets/theme/index.scss", lang: "scss" },
   ],
-  /*
-   ** Customize the progress bar color
-   */
   loading: { color: "#3B8070" },
+  env: {
+    STATIC_URL: STATIC_URL,
+  },
   build: {
     extend(config, { isDev, isClient }) {
       if (isDev && isClient) {
@@ -32,6 +36,11 @@ module.exports = {
           loader: "eslint-loader",
           exclude: /(node_modules)/,
         });
+      }
+      // ********* Notice ***********
+      // ********* If prod and set CDN_DOMAIN, setup publicPath to it
+      if (!isDev && process.env.CDN_DOMAIN) {
+        config.output.publicPath = process.env.CDN_DOMAIN
       }
     },
   },

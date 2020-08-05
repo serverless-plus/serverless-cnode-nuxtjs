@@ -49,12 +49,15 @@
     "lru-cache": "^6.0.0",
     "normalize-scss": "^7.0.1",
     "nuxt": "^2.14.0",
+    "rimraf": "^3.0.2",
     "vuex-persistedstate": "^3.0.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^9.1.1",
     "@commitlint/config-conventional": "^9.1.1",
     "babel-eslint": "^10.1.0",
+    "cross-env": "^7.0.2",
+    "dotenv": "^8.2.0",
     "eslint": "^7.5.0",
     "eslint-friendly-formatter": "^4.0.1",
     "eslint-loader": "^4.0.2",

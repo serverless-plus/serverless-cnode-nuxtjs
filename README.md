@@ -57,6 +57,9 @@ APIGW_CUSTOM_DOMAIN_CERTID=xxx
 # CDN 域名，证书 ID
 CDN_DOMAIN=static.cnode.yuga.chat
 CDN_DOMAIN_CERTID=xxx
+
+# 本地开发服务端口
+PORT=8000
 ```
 
 > 注意：如果不需要使用 CDN，直接使用 COS 自动生成的域名，也是可以的，只需要删除
